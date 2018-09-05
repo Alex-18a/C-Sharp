@@ -6,37 +6,23 @@
         xmlns:local="clr-namespace:_2_FigurasGeometricasConRaton"
         mc:Ignorable="d"
         Title="Fuiguras Geometricas Con Raton" Height="450" Width="800">
-    <Grid >
-        <Menu VerticalAlignment="Top" >
-            <RadioButton ClickMode="Hover">
-                <Image Source="iconos\line.png" Width="50" Height="50"></Image>
-            </RadioButton>
-
-            <RadioButton >
-                <Image Source="iconos\squere.png" Width="50" Height="50"></Image>
-            </RadioButton>
-
-            <RadioButton >
-                <Image Source="iconos\triangle.png" Width="50" Height="50"></Image>
-            </RadioButton>
-
-            <RadioButton >
-                <Image Source="iconos\circle.png" Width="50" Height="50"></Image>
-            </RadioButton>
-
-            <RadioButton >
-                <Image Source="iconos\erase.png" Width="50" Height="50"></Image>
-            </RadioButton>
-            <Rectangle Fill="Black" Height="30" Stroke="Black" Width="30" Margin="0,0,10,10" />
-            <Rectangle Fill="White" Height="30" Stroke="Black" Width="30" Margin="-50,15,0,0"/>
-            <Slider x:Name="SldPunto" Width="158" Maximum="20" Minimum="1" Value="10"  Interval="20" />
-
-        </Menu>
-        <StatusBar  Height="30" VerticalAlignment="Bottom">
-           <Label Content="label" HorizontalAlignment="Right" /> 
+    <DockPanel>
+        <ToolBar DockPanel.Dock="Top" Height="50">
+            <RadioButton x:Name="btnPunto" Content="Punto" Height="45" VerticalAlignment="Top" IsChecked="True"/>
+            <RadioButton x:Name="btnLinea" Content="Linea" Height="45" VerticalAlignment="Top"/>
+            <RadioButton x:Name="btnRectangulo" Content="Rectangulo" Height="45" VerticalAlignment="Top"/>
+            <RadioButton x:Name="btnTriangulo" Content="Triangulo" Height="45" VerticalAlignment="Top"/>
+            <RadioButton x:Name="btnCirculo" Content="Circulo" Height="45" VerticalAlignment="Top"/>
+            <RadioButton x:Name="btnBorrador" Content="Borrador" Height="45" VerticalAlignment="Top"/>
+        </ToolBar>
+        <StatusBar DockPanel.Dock="Bottom" Height="30">
+            <StatusBarItem HorizontalAlignment="Right">
+                <Label x:Name="lblPosicion" Content="X:0 Y:0" FontWeight="Bold"/>
+            </StatusBarItem>
         </StatusBar>
-        
-
-    </Grid>
+        <Canvas x:Name="Lienzo" Background="White" MouseMove="ActualizarPosicion" MouseLeftButtonDown="IniciarDibujado">
+            
+        </Canvas>
+    </DockPanel>
 
 </Window>

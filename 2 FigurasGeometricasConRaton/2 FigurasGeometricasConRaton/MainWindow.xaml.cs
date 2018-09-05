@@ -21,9 +21,38 @@ namespace _2_FigurasGeometricasConRaton
     /// no se porque sale ese vaerga
     public partial class MainWindow : Window
     {
+        private Line LineaTemporal;
         public MainWindow()
         {
             InitializeComponent();
+        }      
+
+        private void ActualizarPosicion(object sender, MouseEventArgs e)
+        {
+            int posX = (int)e.GetPosition(Lienzo).X, posY = (int)e.GetPosition(Lienzo).Y;
+            lblPosicion.Content = "X: " + posX + " Y: " + posY;
+            if (e.LeftButton==MouseButtonState.Pressed )
+            {
+                if (btnLinea.IsChecked == true)
+                {
+                    LineaTemporal.X2 = (int)e.GetPosition(Lienzo).X;
+                    LineaTemporal.Y2 = (int)e.GetPosition(Lienzo).Y;
+                }
+            }
+        }
+
+        private void IniciarDibujado(object sender, MouseButtonEventArgs e)
+        {
+            if (btnLinea.IsChecked == true)
+            {
+                LineaTemporal = new Line();
+                LineaTemporal.X1 = (int)e.GetPosition(Lienzo).X;
+                LineaTemporal.Y1 = (int)e.GetPosition(Lienzo).Y;
+                LineaTemporal.Stroke=Brushes.Black;
+                LineaTemporal.StrokeThickness = 10;
+                Lienzo.Children.Add(LineaTemporal);
+                
+            }
         }
     }
 }
