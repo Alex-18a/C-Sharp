@@ -11,16 +11,18 @@
             <RadioButton x:Name="btnPunto" Content="Punto" Height="45" VerticalAlignment="Top" IsChecked="True"/>
             <RadioButton x:Name="btnLinea" Content="Linea" Height="45" VerticalAlignment="Top"/>
             <RadioButton x:Name="btnRectangulo" Content="Rectangulo" Height="45" VerticalAlignment="Top"/>
-            <RadioButton x:Name="btnTriangulo" Content="Triangulo" Height="45" VerticalAlignment="Top"/>
+            <RadioButton x:Name="btnPoligono
+" Content="Triangulo" Height="45" VerticalAlignment="Top"/>
             <RadioButton x:Name="btnCirculo" Content="Circulo" Height="45" VerticalAlignment="Top"/>
             <RadioButton x:Name="btnBorrador" Content="Borrador" Height="45" VerticalAlignment="Top"/>
+            <Slider x:Name="sldAnchoDePincel" Width="100" Margin="10,10,0,0" Maximum="20" Minimum="1" AutoToolTipPlacement="TopLeft" ValueChanged="ActualizarAnchoDePincel"/>
         </ToolBar>
         <StatusBar DockPanel.Dock="Bottom" Height="30">
             <StatusBarItem HorizontalAlignment="Right">
                 <Label x:Name="lblPosicion" Content="X:0 Y:0" FontWeight="Bold"/>
             </StatusBarItem>
         </StatusBar>
-        <Canvas x:Name="Lienzo" Background="White" MouseMove="ActualizarPosicion" MouseLeftButtonDown="IniciarDibujado">
+        <Canvas x:Name="Lienzo" Panel.ZIndex="-1" Background="White" MouseMove="ActualizarPosicion" MouseLeftButtonDown="IniciarDibujado">
             
         </Canvas>
     </DockPanel>
