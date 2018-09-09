@@ -22,21 +22,36 @@ namespace _2_FigurasGeometricasConRaton
     public partial class MainWindow : Window
     {
         private double anchoPincel;
-        private Line LineaTemporal;
         private Point centroCirculo;
-        private Ellipse circuloTemporal;
+        private Ellipse circuloTemporal;       
+        private Line LineaTemporal;
+        private Polygon poligonoTemporal;
+        private int posX, posY;
+        bool flag = true;
+        private PointCollection puntos=new PointCollection();
+        int contador = 0;
 
         public MainWindow()
         {
             InitializeComponent();
-        }      
+        }
+
+        private void ActualizarAnchoDePincel(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            anchoPincel = sldAnchoDePincel.Value;
+        }
 
         private void ActualizarPosicion(object sender, MouseEventArgs e)
         {
-            int posX = (int)e.GetPosition(Lienzo).X, posY = (int)e.GetPosition(Lienzo).Y;
+            posX = (int)e.GetPosition(Lienzo).X;
+            posY = (int)e.GetPosition(Lienzo).Y;
             lblPosicion.Content = "X: " + posX + " Y: " + posY;
-            if (e.LeftButton==MouseButtonState.Pressed )
+            if (e.LeftButton == MouseButtonState.Pressed)
             {
+                if (btnPunto.IsChecked == true)
+                {
+
+                }
                 if (btnLinea.IsChecked == true)
                 {
                     LineaTemporal.X2 = (int)e.GetPosition(Lienzo).X;
@@ -45,29 +60,53 @@ namespace _2_FigurasGeometricasConRaton
                 if (btnCirculo.IsChecked == true)
                 {
                     //se aplica un pitagoras para el punto izquierdo superior y el radio
-                    double radio = Math.Sqrt(Math.Pow((posX-centroCirculo.X),2)+Math.Pow((posY-centroCirculo.Y),2));
-                    Canvas.SetLeft(circuloTemporal,centroCirculo.X-radio);
+                    double radio = Math.Sqrt(Math.Pow((posX - centroCirculo.X), 2) + Math.Pow((posY - centroCirculo.Y), 2));
+                    Canvas.SetLeft(circuloTemporal, centroCirculo.X - radio);
                     Canvas.SetTop(circuloTemporal, centroCirculo.Y - radio);
 
                     circuloTemporal.Width = radio * 2;
                     circuloTemporal.Height = radio * 2;
-                    
-
                 }
+                if (btnPoligono.IsChecked == true)
+                {
+                    LineaTemporal.X2 = posX;
+                    LineaTemporal.Y2 = posY;                   
+                }
+            }
+            
+        }
+
+        private void soltar(object sender, MouseButtonEventArgs e)
+        {
+            if (btnPoligono.IsChecked == true)
+            {               
+                LineaTemporal = new Line();
+                LineaTemporal.X1 = posX;
+                LineaTemporal.Y1 = posY;
+                LineaTemporal.X2 = posX;
+                LineaTemporal.Y2 = posY;
+                LineaTemporal.Stroke = Brushes.Black;
+                LineaTemporal.StrokeThickness = anchoPincel;
+                Lienzo.Children.Add(LineaTemporal);
+                Evaluardistancia();
             }
         }
 
         private void IniciarDibujado(object sender, MouseButtonEventArgs e)
         {
+            if (btnPunto.IsChecked == true)
+            {
+
+            }
             if (btnLinea.IsChecked == true)
             {
                 LineaTemporal = new Line();
                 LineaTemporal.X1 = (int)e.GetPosition(Lienzo).X;
                 LineaTemporal.Y1 = (int)e.GetPosition(Lienzo).Y;
-                LineaTemporal.Stroke=Brushes.Black;
-                LineaTemporal.StrokeThickness = 10;
+                LineaTemporal.Stroke = Brushes.Black;
+                LineaTemporal.StrokeThickness = anchoPincel;
                 Lienzo.Children.Add(LineaTemporal);
-                
+
             }
             if (btnCirculo.IsChecked == true)
             {
@@ -83,11 +122,47 @@ namespace _2_FigurasGeometricasConRaton
                 Canvas.SetTop(circuloTemporal, e.GetPosition(Lienzo).X);
                 Lienzo.Children.Add(circuloTemporal);
             }
+            if (btnPoligono.IsChecked == true)
+            {
+                if (flag)
+                {
+                    contador = 0;
+                    puntos = new PointCollection();
+                    puntos.Add(new Point(posX,posY));
+                    contador++;
+                    LineaTemporal = new Line();
+                    LineaTemporal.X1 = (int)e.GetPosition(Lienzo).X;
+                    LineaTemporal.Y1 = (int)e.GetPosition(Lienzo).Y;
+                    LineaTemporal.Stroke = Brushes.Black;
+                    LineaTemporal.StrokeThickness = anchoPincel;
+                    Lienzo.Children.Add(LineaTemporal);
+                    flag = false;
+                }
+                else
+                {
+                    LineaTemporal.X2 = posX;
+                    LineaTemporal.Y2 = posY;
+                    puntos.Add(new Point(posX, posY));
+                    contador++;
+                }
+            }
         }
-
-        private void ActualizarAnchoDePincel(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void Evaluardistancia()
         {
-            anchoPincel =sldAnchoDePincel.Value;
+            if (puntos.Count > 2)
+            {
+                double distancia =Math.Abs( Math.Sqrt(Math.Pow((puntos[puntos.Count - 1].X - puntos[0].X), 2) + Math.Pow((puntos[puntos.Count - 1].Y - puntos[0].Y), 2)));
+                if (distancia < 15)
+                {
+                    poligonoTemporal = new Polygon();
+                    poligonoTemporal.Points = puntos;
+                    poligonoTemporal.Stroke = Brushes.Black;
+                    poligonoTemporal.StrokeThickness = anchoPincel;                    
+                    Lienzo.Children.RemoveRange((Lienzo.Children.Count-contador),Lienzo.Children.Count);
+                    Lienzo.Children.Add(poligonoTemporal);
+                    
+                }
+            }
         }
     }
 }

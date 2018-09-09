@@ -97,10 +97,19 @@
   <ItemGroup>
     <Resource Include="iconos\circle.png" />
     <Resource Include="iconos\erase.png" />
-    <Resource Include="iconos\geometrics.png" />
     <Resource Include="iconos\line.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="iconos\pencil.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="iconos\MESH.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="iconos\squere.png" />
-    <Resource Include="iconos\triangle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="iconos\poygon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

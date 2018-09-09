@@ -5,16 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_2_FigurasGeometricasConRaton"
         mc:Ignorable="d"
-        Title="Fuiguras Geometricas Con Raton" Height="450" Width="800">
+        Title="Fuiguras Geometricas Con Raton" Height="450" Width="800" Icon="iconos/MESH.png">
     <DockPanel>
         <ToolBar DockPanel.Dock="Top" Height="50">
-            <RadioButton x:Name="btnPunto" Content="Punto" Height="45" VerticalAlignment="Top" IsChecked="True"/>
-            <RadioButton x:Name="btnLinea" Content="Linea" Height="45" VerticalAlignment="Top"/>
-            <RadioButton x:Name="btnRectangulo" Content="Rectangulo" Height="45" VerticalAlignment="Top"/>
-            <RadioButton x:Name="btnPoligono
-" Content="Triangulo" Height="45" VerticalAlignment="Top"/>
-            <RadioButton x:Name="btnCirculo" Content="Circulo" Height="45" VerticalAlignment="Top"/>
-            <RadioButton x:Name="btnBorrador" Content="Borrador" Height="45" VerticalAlignment="Top"/>
+            <RadioButton x:Name="btnPunto" Height="45" VerticalAlignment="Top" IsChecked="True">
+                <Image Source="iconos\pencil.png"/>
+            </RadioButton>
+            <RadioButton x:Name="btnLinea" Height="45" VerticalAlignment="Top">
+                <Image Source="iconos\line.png"/>
+            </RadioButton>
+            <RadioButton x:Name="btnRectangulo"  Height="45" VerticalAlignment="Top">
+                <Image Source="iconos\squere.png"/>
+            </RadioButton>
+            <RadioButton x:Name="btnPoligono"  Height="45" VerticalAlignment="Top">
+                <Image Source="iconos\poygon.png"/>
+            </RadioButton>
+            <RadioButton x:Name="btnCirculo"  Height="45" VerticalAlignment="Top">
+                <Image Source="iconos\circle.png"/>
+            </RadioButton>
+            <RadioButton x:Name="btnBorrador"  Height="45" VerticalAlignment="Top">
+                <Image Source="iconos\erase.png"/>
+            </RadioButton>
             <Slider x:Name="sldAnchoDePincel" Width="100" Margin="10,10,0,0" Maximum="20" Minimum="1" AutoToolTipPlacement="TopLeft" ValueChanged="ActualizarAnchoDePincel"/>
         </ToolBar>
         <StatusBar DockPanel.Dock="Bottom" Height="30">
@@ -22,7 +33,7 @@
                 <Label x:Name="lblPosicion" Content="X:0 Y:0" FontWeight="Bold"/>
             </StatusBarItem>
         </StatusBar>
-        <Canvas x:Name="Lienzo" Panel.ZIndex="-1" Background="White" MouseMove="ActualizarPosicion" MouseLeftButtonDown="IniciarDibujado">
+        <Canvas x:Name="Lienzo" Panel.ZIndex="-1" Background="White" MouseMove="ActualizarPosicion" MouseLeftButtonDown="IniciarDibujado" MouseLeftButtonUp="soltar">
             
         </Canvas>
     </DockPanel>
