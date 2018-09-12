@@ -23,6 +23,7 @@ namespace _2_FigurasGeometricasConRaton
     {
         private double anchoPincel;
         private Point centroCirculo;
+        private Rectangle rectanguloTemporal;
         private Ellipse circuloTemporal;       
         private Line LineaTemporal;
         private Polygon poligonoTemporal;
@@ -41,6 +42,22 @@ namespace _2_FigurasGeometricasConRaton
             anchoPincel = sldAnchoDePincel.Value;
         }
 
+        private void DibujarPunto(double x, double y, double anchoPincel, Brush color)
+        {
+            Ellipse punto = new Ellipse();
+            punto.Stroke = color;
+            punto.StrokeThickness = anchoPincel;
+            punto.Fill = color;
+
+            punto.Height = anchoPincel;
+            punto.Width = anchoPincel;
+
+            Canvas.SetLeft(punto, x - anchoPincel / 2);
+            Canvas.SetTop(punto, y - anchoPincel / 2);
+
+            Lienzo.Children.Add(punto);
+        }
+
         private void ActualizarPosicion(object sender, MouseEventArgs e)
         {
             posX = (int)e.GetPosition(Lienzo).X;
@@ -50,6 +67,13 @@ namespace _2_FigurasGeometricasConRaton
             {
                 if (btnPunto.IsChecked == true)
                 {
+                    DibujarPunto(e.GetPosition(Lienzo).X, e.GetPosition(Lienzo).Y, anchoPincel, Brushes.Black);
+                }
+                if (btnRectangulo.IsChecked == true)
+                {
+
+                    rectanguloTemporal.Width = e.GetPosition(Lienzo).X - Canvas.GetLeft(rectanguloTemporal);
+                    rectanguloTemporal.Height = e.GetPosition(Lienzo).Y - Canvas.GetTop(rectanguloTemporal);
 
                 }
                 if (btnLinea.IsChecked == true)
@@ -72,6 +96,10 @@ namespace _2_FigurasGeometricasConRaton
                     LineaTemporal.X2 = posX;
                     LineaTemporal.Y2 = posY;                   
                 }
+                if (btnBorrador.IsChecked == true)
+                {
+                    DibujarPunto(e.GetPosition(Lienzo).X, e.GetPosition(Lienzo).Y, anchoPincel, Brushes.White);
+                }    
             }
             
         }
@@ -83,8 +111,10 @@ namespace _2_FigurasGeometricasConRaton
                 LineaTemporal = new Line();
                 LineaTemporal.X1 = posX;
                 LineaTemporal.Y1 = posY;
+                puntos.Add(new Point(posX, posY));
                 LineaTemporal.X2 = posX;
                 LineaTemporal.Y2 = posY;
+                puntos.Add(new Point(posX, posY));
                 LineaTemporal.Stroke = Brushes.Black;
                 LineaTemporal.StrokeThickness = anchoPincel;
                 Lienzo.Children.Add(LineaTemporal);
@@ -95,7 +125,24 @@ namespace _2_FigurasGeometricasConRaton
         private void IniciarDibujado(object sender, MouseButtonEventArgs e)
         {
             if (btnPunto.IsChecked == true)
+            {                
+                    DibujarPunto(e.GetPosition(Lienzo).X, e.GetPosition(Lienzo).Y, anchoPincel, Brushes.Black);              
+            }
+            if (btnRectangulo.IsChecked == true)
             {
+
+                rectanguloTemporal = new Rectangle();
+                rectanguloTemporal.Stroke = Brushes.Black;
+                rectanguloTemporal.StrokeThickness = anchoPincel;
+                rectanguloTemporal.Fill = Brushes.Gray;
+
+                rectanguloTemporal.Height = 0;
+                rectanguloTemporal.Width = 0;
+
+                Canvas.SetLeft(rectanguloTemporal, e.GetPosition(Lienzo).X);
+                Canvas.SetTop(rectanguloTemporal, e.GetPosition(Lienzo).Y);
+
+                Lienzo.Children.Add(rectanguloTemporal);
 
             }
             if (btnLinea.IsChecked == true)
@@ -146,6 +193,10 @@ namespace _2_FigurasGeometricasConRaton
                     contador++;
                 }
             }
+            if (btnBorrador.IsChecked == true)
+            {
+
+            }
         }
         private void Evaluardistancia()
         {
@@ -160,7 +211,7 @@ namespace _2_FigurasGeometricasConRaton
                     poligonoTemporal.StrokeThickness = anchoPincel;                    
                     Lienzo.Children.RemoveRange((Lienzo.Children.Count-contador),Lienzo.Children.Count);
                     Lienzo.Children.Add(poligonoTemporal);
-                    
+                    flag = true;
                 }
             }
         }
